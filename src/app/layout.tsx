@@ -73,6 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <meta name="google-site-verification" content="WQONyJzVa9EFz09EZ40cktC8nAxdSCavRa64xF0Umxo" />
         <link rel="canonical" href="https://www.globalcontinuum.app/" /> {/* Replace with your actual domain */}
       </head>
       <body className={`${inter.variable} antialiased`}>
