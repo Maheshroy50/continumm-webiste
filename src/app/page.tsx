@@ -213,7 +213,7 @@ export default function Home() {
         <div className={`w-full max-w-6xl mx-auto mt-20 px-4 ${mounted ? 'animate-fade-in-scale animation-delay-400' : 'opacity-0'}`}>
           <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
             <Image 
-              src="/screenshot-1.png" 
+              src="/screenshot-hero.png" 
               alt="Continuum Browser"
               width={1400}
               height={875}
@@ -364,7 +364,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a
-                  href="#"
+                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum-0.1.0-beta.1-universal.dmg"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'macos'
                       ? 'bg-white text-black hover:bg-white/90'
@@ -375,7 +375,7 @@ export default function Home() {
                   Universal (Intel & Apple Silicon)
                 </a>
               </div>
-              <p className="text-white/30 text-xs mt-3">~100 MB</p>
+              <p className="text-white/30 text-xs mt-3">192 MB</p>
             </div>
 
             {/* Windows */}
@@ -393,7 +393,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a
-                  href="#"
+                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum.Setup.0.1.0-beta.1.exe"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'windows'
                       ? 'bg-white text-black hover:bg-white/90'
@@ -401,21 +401,10 @@ export default function Home() {
                   }`}
                 >
                   <DownloadIcon />
-                  x64 (Intel/AMD)
-                </a>
-                <a
-                  href="#"
-                  className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
-                    detectedOS === 'windows'
-                      ? 'bg-white/80 text-black hover:bg-white/70'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  <DownloadIcon />
-                  ARM64
+                  Download (.exe)
                 </a>
               </div>
-              <p className="text-white/30 text-xs mt-3">~90 MB</p>
+              <p className="text-white/30 text-xs mt-3">175 MB</p>
             </div>
 
             {/* Linux */}
@@ -433,7 +422,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a
-                  href="#"
+                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/continuum-browser_0.1.0-beta.1_amd64.deb"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'linux'
                       ? 'bg-white text-black hover:bg-white/90'
@@ -441,10 +430,10 @@ export default function Home() {
                   }`}
                 >
                   <DownloadIcon />
-                  x64 (Intel/AMD)
+                  Download (.deb)
                 </a>
                 <a
-                  href="#"
+                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum-0.1.0-beta.1.AppImage"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'linux'
                       ? 'bg-white/80 text-black hover:bg-white/70'
@@ -452,10 +441,10 @@ export default function Home() {
                   }`}
                 >
                   <DownloadIcon />
-                  ARM64
+                  Download (.AppImage)
                 </a>
               </div>
-              <p className="text-white/30 text-xs mt-3">~85 MB • .deb / .AppImage</p>
+              <p className="text-white/30 text-xs mt-3">.deb: 78 MB | .AppImage: 115 MB</p>
             </div>
           </div>
 
