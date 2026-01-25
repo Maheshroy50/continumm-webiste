@@ -1,0 +1,16 @@
+{
+  "name": "Continuum Browser",
+  "short_name": "Continuum",
+  "description": "A fast, secure, modern browser built for focus. Organize your browsing with Workspaces, resume anywhere, and keep notes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
