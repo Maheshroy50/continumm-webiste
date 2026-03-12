@@ -10,7 +10,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Continuum Browser – Resume Your Work, Not Your Tabs",
-  description: "Continuum is a task-first, privacy-native browser that preserves context and lets you resume work exactly where you left off. Available for macOS, Windows, and Linux.",
+  description: "Continuum is a task-first, privacy-native browser with AI Agent, built-in ad blocking, and workspace resume. Available for macOS and Windows.",
   keywords: [
     "Continuum Browser",
     "task-based browser",
@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     "privacy browser",
     "macOS browser",
     "Windows browser",
-    "Linux browser",
+    "AI browser",
+    "ad blocker browser",
   ],
   authors: [{ name: "Continuum Team" }],
   creator: "Continuum",
@@ -40,10 +41,10 @@ export const metadata: Metadata = {
     url: "https://www.globalcontinuum.app/",
     siteName: "Continuum Browser",
     title: "Continuum Browser – Resume Your Work, Not Your Tabs",
-    description: "Continuum is a task-first, privacy-native browser that preserves context and lets you resume work exactly where you left off. Available for macOS, Windows, and Linux.",
+    description: "Continuum is a task-first, privacy-native browser with AI Agent, built-in ad blocking, and workspace resume. Available for macOS and Windows.",
     images: [
       {
-        url: "/screenshot-hero.png",
+        url: "/Continuum First.png",
         width: 1200,
         height: 630,
         alt: "Continuum Browser - Resume Your Work, Not Your Tabs",
@@ -53,8 +54,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Continuum Browser – Resume Your Work, Not Your Tabs",
-    description: "Continuum is a task-first, privacy-native browser that preserves context and lets you resume work exactly where you left off. Available for macOS, Windows, and Linux.",
-    images: ["/screenshot-hero.png"],
+    description: "Continuum is a task-first, privacy-native browser with AI Agent, built-in ad blocking, and workspace resume. Available for macOS and Windows.",
+    images: ["/Continuum First.png"],
     creator: "@continuum",
   },
   icons: {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 
 // Icons as components
@@ -28,56 +28,84 @@ const WindowsIcon = () => (
   </svg>
 );
 
-const LinuxIcon = () => (
-  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12.503 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587.006 1.22-.043 1.876-.2a3.535 3.535 0 001.81 1.174c.752.2 1.692-.004 2.618-.47.865-.465 1.964-.4 2.774-.6.405-.131.766-.267.94-.6.174-.34.142-.805-.106-1.485-.076-.242-.018-.57.04-.97.028-.135.055-.337.055-.535-.001-.208-.041-.412-.132-.602-.206-.411-.551-.544-.864-.68-.312-.133-.598-.2-.797-.4-.213-.239-.403-.571-.664-.84a.43.43 0 00-.109-.134c.123-.805-.01-1.657-.287-2.489-.59-1.771-1.831-3.47-2.716-4.521-.75-1.067-.974-1.928-1.05-3.02-.065-1.491 1.056-5.965-3.17-6.298A5.417 5.417 0 0012.503 0z"/>
+const PlayIcon = () => (
+  <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M8 5v14l11-7z"/>
   </svg>
 );
 
 const features = [
   {
-    title: "Workspaces",
-    description: "Organize your browsing into persistent contexts that remember everything.",
-    icon: "◯"
+    title: "Workspace Resume",
+    description: "Return to any page exactly where you left off. Cascading restore: DOM anchor, scroll ratio, pixel position, and redirect detection.",
+    icon: "🔄"
   },
   {
-    title: "Resume Anywhere",
-    description: "Return to any page exactly where you left off. Scroll position, tabs, everything.",
-    icon: "↺"
+    title: "AI Agent (Second Brain)",
+    description: "Chat or delegate tasks to your AI. Summarize pages, fill forms, navigate with multi-provider support and BYOK privacy.",
+    icon: "🤖"
   },
   {
-    title: "Notes Panel",
-    description: "Keep markdown notes per Workspace. Auto-save and always accessible.",
-    icon: "✎"
+    title: "Continuum Shield",
+    description: "Real local hash-prefix DB with 4 live threat feeds. Runtime hardening, multi-layer fingerprint resistance, behavioral worker monitoring, and 164K+ filter rules.",
+    icon: "🛡️"
   },
   {
     title: "Quick Switcher",
-    description: "Cmd+K to instantly jump between Workspaces with keyboard-first navigation.",
-    icon: "⌘"
+    description: "Cmd+K to instantly jump between Workspaces. Debounced search, keyboard navigation, and smart sorting.",
+    icon: "⚡"
+  },
+  {
+    title: "Notes Panel",
+    description: "Markdown-friendly scratchpad per Workspace. Right-click 'Send to Notes' to clip content from any webpage instantly.",
+    icon: "📝"
   },
   {
     title: "Privacy First",
-    description: "No telemetry. No analytics. All data stays local on your machine.",
-    icon: "◈"
+    description: "No telemetry. Per-site permissions. Anti-fingerprinting. Cookie blocking. Nothing leaves your machine.",
+    icon: "🔒"
   },
   {
-    title: "AI Assistant",
-    description: "Multi-provider AI with page context. Bring your own API keys.",
-    icon: "✦"
+    title: "Multi-Engine Search",
+    description: "6 search engines: Google, Bing, DuckDuckGo, Yahoo, Ecosia, Naver. Persisted preference with URL auto-detection.",
+    icon: "🔍"
+  },
+  {
+    title: "P2P Sync (beta)",
+    description: "Sync across devices with end-to-end encryption. Peer-to-peer WebRTC with no cloud required.",
+    icon: "🔄"
+  },
+  {
+    title: "DRM Content",
+    description: "Built-in Widevine CDM. Netflix, Spotify, Disney+ protected streaming works out of the box.",
+    icon: "🎬"
   }
 ];
 
 const screenshots = [
-  { src: "/screenshot-workspaces.png", alt: "Workspaces", caption: "Workspaces" },
-  { src: "/screenshot-notes.png", alt: "Notes Panel", caption: "Notes Panel" },
-  { src: "/screenshot-quick-switcher.png", alt: "Quick Switcher", caption: "Quick Switcher" },
-  { src: "/screenshot-privacy.png", alt: "Privacy Settings", caption: "Privacy Settings" },
+  { src: "/Continuum workspace.png", alt: "Workspaces", caption: "Workspaces" },
+  { src: "/Continuum ai .png", alt: "AI Assistant", caption: "AI Agent" },
+  { src: "/Continuum shield.png", alt: "Continuum Shield", caption: "Shield Security" },
+  { src: "/Continuum Security.png", alt: "Privacy Settings", caption: "Privacy Settings" },
+];
+
+const differentiators = [
+  { chrome: "Tabs disappear on close", continuum: "Pages persist forever" },
+  { chrome: "Start fresh every time", continuum: "Resume exactly where you stopped" },
+  { chrome: "One shared session", continuum: "Isolated sessions per Workspace" },
+  { chrome: "Scroll position lost", continuum: "Cascading scroll restore" },
+  { chrome: "Copy-paste to notes", continuum: "Right-click \"Send to Notes\"" },
+  { chrome: "One search engine", continuum: "6 search engines to choose from" },
+  { chrome: "No built-in ad blocking", continuum: "164K+ filter rules" },
+  { chrome: "No DRM on some builds", continuum: "Widevine DRM built-in" },
 ];
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [activeScreenshot, setActiveScreenshot] = useState(0);
-  const [detectedOS, setDetectedOS] = useState<'macos' | 'windows' | 'linux'>('macos');
+  const [detectedOS, setDetectedOS] = useState<'macos' | 'windows'>('macos');
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -86,10 +114,8 @@ export default function Home() {
     const userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.includes('win')) {
       setDetectedOS('windows');
-    } else if (userAgent.includes('linux')) {
-      setDetectedOS('linux');
     } else {
-      setDetectedOS('macos'); // Default to macOS (includes Mac)
+      setDetectedOS('macos'); // Default to macOS
     }
     
     // Auto-rotate screenshots
@@ -99,6 +125,17 @@ export default function Home() {
     
     return () => clearInterval(interval);
   }, []);
+
+  const handleVideoPlay = () => {
+    if (videoRef.current) {
+      if (isVideoPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsVideoPlaying(!isVideoPlaying);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black">
@@ -153,6 +190,7 @@ export default function Home() {
           <div className="hidden md:flex items-center gap-8">
             <a href="#features" className="text-white/60 hover:text-white text-sm">Features</a>
             <a href="#screenshots" className="text-white/60 hover:text-white text-sm">Preview</a>
+            <a href="#ai-agent" className="text-white/60 hover:text-white text-sm">AI Agent</a>
             <a href="#download" className="text-white/60 hover:text-white text-sm">Download</a>
           </div>
           <a 
@@ -161,7 +199,6 @@ export default function Home() {
           >
             {detectedOS === 'macos' && <AppleIcon />}
             {detectedOS === 'windows' && <WindowsIcon />}
-            {detectedOS === 'linux' && <LinuxIcon />}
             <span className="hidden sm:inline">Download</span>
           </a>
         </div>
@@ -171,9 +208,10 @@ export default function Home() {
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className={`${mounted ? 'animate-fade-in' : 'opacity-0'}`}>
-            <p className="text-white/50 text-sm tracking-wide uppercase mb-6">
-              A new browser for focused work
-            </p>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08] mb-6">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-white/60 text-xs tracking-wide">Version 2.0.0 Now Available</span>
+            </div>
           </div>
           
           <h1 className={`text-[clamp(2.5rem,8vw,5.5rem)] font-medium leading-[1.05] tracking-tight mb-8 ${mounted ? 'animate-fade-in animation-delay-100' : 'opacity-0'}`}>
@@ -183,7 +221,7 @@ export default function Home() {
           </h1>
           
           <p className={`text-white/50 text-lg md:text-xl max-w-xl mx-auto leading-relaxed mb-12 ${mounted ? 'animate-fade-in animation-delay-200' : 'opacity-0'}`}>
-            Continuum is a task-first, privacy-native browser that preserves context and lets you pick up exactly where you left off.
+            Continuum is a task-first, privacy-native browser with AI Agent, built-in ad blocking, and workspace resume. Pick up exactly where you left off.
           </p>
           
           <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center ${mounted ? 'animate-fade-in animation-delay-300' : 'opacity-0'}`}>
@@ -193,11 +231,9 @@ export default function Home() {
             >
               {detectedOS === 'macos' && <AppleIcon />}
               {detectedOS === 'windows' && <WindowsIcon />}
-              {detectedOS === 'linux' && <LinuxIcon />}
               {detectedOS === 'macos' && 'Download for Mac'}
               {detectedOS === 'windows' && 'Download for Windows'}
-              {detectedOS === 'linux' && 'Download for Linux'}
-              <span className="text-black/40 text-sm">— Free</span>
+              <span className="text-black/40 text-sm">Free</span>
             </a>
             <a
               href="#features"
@@ -213,7 +249,7 @@ export default function Home() {
         <div className={`w-full max-w-6xl mx-auto mt-20 px-4 ${mounted ? 'animate-fade-in-scale animation-delay-400' : 'opacity-0'}`}>
           <div className="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
             <Image 
-              src="/screenshot-hero.png" 
+              src="/Continuum First.png" 
               alt="Continuum Browser"
               width={1400}
               height={875}
@@ -236,11 +272,11 @@ export default function Home() {
       <section className="py-32 px-6 relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-2xl md:text-3xl text-white/80 leading-relaxed font-light">
-            Unlike other browsers where tabs disappear and context is lost,{" "}
+            Unlike Chrome where tabs disappear and context is lost,{" "}
             <span className="text-white font-normal">
               Continuum treats your browsing as continuous work.
             </span>{" "}
-            Workspaces persist. Scroll positions restore. Notes stay with your research.
+            Workspaces persist. Scroll positions restore. Notes stay with your research. AI assists your workflow.
           </p>
         </div>
       </section>
@@ -250,9 +286,12 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-20">
             <p className="text-white/40 text-sm uppercase tracking-wide mb-4">Features</p>
-            <h2 className="text-4xl md:text-5xl font-medium text-white">
+            <h2 className="text-4xl md:text-5xl font-medium text-white mb-4">
               Built for how you work
             </h2>
+            <p className="text-white/40 text-lg max-w-2xl mx-auto">
+              Everything you need for focused, privacy-first browsing with an AI agent that actually helps.
+            </p>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-1">
@@ -261,7 +300,7 @@ export default function Home() {
                 key={index}
                 className="feature-card p-8 rounded-2xl bg-white/[0.02] border border-white/[0.04]"
               >
-                <div className="text-2xl mb-5 text-white/80">{feature.icon}</div>
+                <div className="text-2xl mb-5">{feature.icon}</div>
                 <h3 className="text-lg font-medium text-white mb-3">{feature.title}</h3>
                 <p className="text-white/50 text-[15px] leading-relaxed">{feature.description}</p>
               </div>
@@ -312,6 +351,176 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Shield Details Section */}
+      <section className="py-24 px-6 relative z-10 bg-white/[0.01] border-y border-white/[0.04]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
+              <span className="text-emerald-400 text-xs font-medium tracking-wide">🛡️ ZERO-TRUST SECURITY</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-medium text-white mb-6">
+              Continuum Shield
+            </h2>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
+              Real, active protection running locally in your browser. Not just an ad blocker, a complete security engine.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Safe Browsing</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Real local hash-prefix DB (122K+ entries) with 4 live threat feeds (URLhaus, PhishTank, OpenPhish, crypto-miners).
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Download Quarantine</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Checks 40+ dangerous extensions, double-extension attacks, and source URL reputation. High-risk files are quarantined automatically.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Runtime Hardening</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Injects upgrade-insecure-requests CSP, strips leaky headers, and blocks crypto-miner WebSocket connections at the network layer.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Fingerprint Resistance</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Canvas/AudioContext noise, WebGL/userAgent spoofing, WebRTC IP leak protection, font enumeration noise, and metrics normalization.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Behavioral Monitor</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Actively detects excessive WebAssembly instantiation (&gt;3 in 10s) and Worker spawns (&gt;4) to block hidden crypto-mining.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <h3 className="text-white font-medium mb-2">Live Dashboard</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Stats & config persisted to disk. Toggles work end-to-end, and the security dashboard reads live data every 5 seconds.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Agent Video Section */}
+      <section id="ai-agent" className="py-24 px-6 relative z-10">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6">
+              <span className="text-purple-400 text-xs font-medium tracking-wide">✦ NEW IN 2.0</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-medium text-white mb-6">
+              Meet the AI Agent
+            </h2>
+            <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
+              Your second brain inside the browser. Ask questions, summarize pages, fill forms, navigate
+              with multi-provider support for OpenAI, Gemini, Claude, and GitHub Models. Bring your own API key.
+            </p>
+          </div>
+
+          {/* Video Player */}
+          <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-black/50 shadow-2xl shadow-purple-500/5">
+            {/* Decorative glow behind video */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-purple-500/10 rounded-3xl blur-2xl -z-10" />
+            
+            <video
+              ref={videoRef}
+              className="w-full h-auto"
+              poster="/Continuum ai .png"
+              playsInline
+              controls
+              preload="metadata"
+              onPlay={() => setIsVideoPlaying(true)}
+              onPause={() => setIsVideoPlaying(false)}
+            >
+              <source src="/watch Continuumaiagent in action.mov" type="video/quicktime" />
+              <source src="/watch Continuumaiagent in action.mov" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Play overlay - shown when video is not playing */}
+            {!isVideoPlaying && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center bg-black/30 cursor-pointer transition-all hover:bg-black/20"
+                onClick={handleVideoPlay}
+              >
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 transition-all hover:scale-110">
+                    <PlayIcon />
+                  </div>
+                  <span className="text-white/70 text-sm font-medium">Watch AI Agent in Action</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* AI Agent Feature Highlights */}
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="text-2xl mb-3">💬</div>
+              <h3 className="text-white font-medium mb-2">Chat Mode</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Summarize pages, explain content, and ask questions read-only and safe.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="text-2xl mb-3">🎯</div>
+              <h3 className="text-white font-medium mb-2">Agent Mode</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Fill forms, click buttons, and navigate pages with granular permissions and human approval.
+              </p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
+              <div className="text-2xl mb-3">🔐</div>
+              <h3 className="text-white font-medium mb-2">BYOK Privacy</h3>
+              <p className="text-white/40 text-sm leading-relaxed">
+                Bring Your Own Key. Works with OpenAI, Gemini, Claude, or GitHub Models. Your keys, your data.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Chrome vs Continuum Comparison */}
+      <section className="py-24 px-6 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <p className="text-white/40 text-sm uppercase tracking-wide mb-4">Comparison</p>
+            <h2 className="text-4xl md:text-5xl font-medium text-white">
+              Why switch?
+            </h2>
+          </div>
+
+          <div className="rounded-2xl overflow-hidden border border-white/[0.06]">
+            {/* Table Header */}
+            <div className="grid grid-cols-2 bg-white/[0.04]">
+              <div className="p-4 text-center border-r border-white/[0.06]">
+                <span className="text-white/40 text-sm font-medium">Chrome</span>
+              </div>
+              <div className="p-4 text-center">
+                <span className="text-white text-sm font-medium">Continuum ✦</span>
+              </div>
+            </div>
+            {/* Table Rows */}
+            {differentiators.map((row, index) => (
+              <div key={index} className={`grid grid-cols-2 ${index < differentiators.length - 1 ? 'border-b border-white/[0.04]' : ''}`}>
+                <div className="p-4 text-center border-r border-white/[0.06]">
+                  <span className="text-white/30 text-sm">{row.chrome}</span>
+                </div>
+                <div className="p-4 text-center">
+                  <span className="text-white/70 text-sm">{row.continuum}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="py-24 px-6 relative z-10">
         <div className="max-w-3xl mx-auto">
@@ -324,10 +533,10 @@ export default function Home() {
           
           <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.04]">
             <p className="text-white/70 text-lg leading-relaxed mb-6">
-              Hi, I&apos;m <span className="text-white font-medium">Mahesh Rao</span>. I built Continuum because I was frustrated with how browsers treat our work—as disposable tabs rather than ongoing projects.
+              Hi, I&apos;m <span className="text-white font-medium">Mahesh Rao</span>. I built Continuum because I was frustrated with how browsers treat our work as disposable tabs rather than ongoing projects.
             </p>
             <p className="text-white/50 text-base leading-relaxed mb-6">
-              Every time I closed my browser, I lost context. Scroll positions, tab arrangements, the mental state of what I was researching—all gone. I wanted a browser that understood that work is continuous, not session-based.
+              Every time I closed my browser, I lost context. Scroll positions, tab arrangements, the mental state of what I was researching all gone. I wanted a browser that understood that work is continuous, not session-based.
             </p>
             <p className="text-white/50 text-base leading-relaxed">
               Continuum is my answer: a browser designed around how we actually work. It preserves everything so you can pick up exactly where you left off, whether that&apos;s five minutes or five days later.
@@ -336,7 +545,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Download Section - Simple */}
+      {/* Download Section - Two columns */}
       <section id="download" className="py-32 px-6 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-white/40 text-sm uppercase tracking-wide mb-4">Download</p>
@@ -344,11 +553,11 @@ export default function Home() {
             Try Continuum today
           </h2>
           <p className="text-white/50 text-lg mb-12">
-            Free during beta. Available for macOS, Windows, and Linux.
+            Free during beta. Available for macOS and Windows.
           </p>
           
           {/* Platform Downloads */}
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-2xl mx-auto">
             {/* macOS */}
             <div className={`p-6 rounded-2xl bg-white/[0.02] border transition-all ${
               detectedOS === 'macos' 
@@ -364,7 +573,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a
-                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum-0.1.0-beta.1-universal.dmg"
+                  href="https://github.com/Maheshroy50/Continuum-Browser/releases/download/v2.0.0/Continuum-2.0.0.dmg"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'macos'
                       ? 'bg-white text-black hover:bg-white/90'
@@ -372,10 +581,10 @@ export default function Home() {
                   }`}
                 >
                   <DownloadIcon />
-                  Universal (Intel & Apple Silicon)
+                  Download (.dmg)
                 </a>
               </div>
-              <p className="text-white/30 text-xs mt-3">192 MB</p>
+              <p className="text-white/30 text-xs mt-3">Universal (Intel & Apple Silicon)</p>
             </div>
 
             {/* Windows */}
@@ -393,7 +602,7 @@ export default function Home() {
               </div>
               <div className="space-y-3">
                 <a
-                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum.Setup.0.1.0-beta.1.exe"
+                  href="https://github.com/Maheshroy50/Continuum-Browser/releases/download/v2.0.0/Continuum.Setup.2.0.0.exe"
                   className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
                     detectedOS === 'windows'
                       ? 'bg-white text-black hover:bg-white/90'
@@ -404,47 +613,7 @@ export default function Home() {
                   Download (.exe)
                 </a>
               </div>
-              <p className="text-white/30 text-xs mt-3">175 MB</p>
-            </div>
-
-            {/* Linux */}
-            <div className={`p-6 rounded-2xl bg-white/[0.02] border transition-all ${
-              detectedOS === 'linux' 
-                ? 'border-white/20 ring-1 ring-white/10' 
-                : 'border-white/[0.04]'
-            }`}>
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <LinuxIcon />
-                <span className="text-white font-medium">Linux</span>
-                {detectedOS === 'linux' && (
-                  <span className="text-xs text-white/40 bg-white/10 px-2 py-0.5 rounded-full">Detected</span>
-                )}
-              </div>
-              <div className="space-y-3">
-                <a
-                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/continuum-browser_0.1.0-beta.1_amd64.deb"
-                  className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
-                    detectedOS === 'linux'
-                      ? 'bg-white text-black hover:bg-white/90'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  <DownloadIcon />
-                  Download (.deb)
-                </a>
-                <a
-                  href="https://github.com/Maheshroy50/Continuum-relaese/releases/download/MacContinuum0.1.0beta/Continuum-0.1.0-beta.1.AppImage"
-                  className={`flex items-center justify-center gap-2 w-full px-4 py-3 rounded-full font-medium text-sm transition-colors ${
-                    detectedOS === 'linux'
-                      ? 'bg-white/80 text-black hover:bg-white/70'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  <DownloadIcon />
-                  Download (.AppImage)
-                </a>
-              </div>
-              <p className="text-white/30 text-xs mt-3">.deb: 78 MB | .AppImage: 115 MB</p>
+              <p className="text-white/30 text-xs mt-3">Windows 10 and later</p>
             </div>
           </div>
 
@@ -475,11 +644,12 @@ export default function Home() {
                 />
               </div>
               <span className="text-white/80 text-sm">Continuum</span>
-              <span className="text-white/30 text-xs">Beta</span>
+              <span className="text-white/30 text-xs">v2.0.0</span>
             </div>
             
             <div className="flex items-center gap-8 text-sm text-white/40">
               <a href="#features" className="hover:text-white transition-colors">Features</a>
+              <a href="#ai-agent" className="hover:text-white transition-colors">AI Agent</a>
               <a href="#download" className="hover:text-white transition-colors">Download</a>
             </div>
             
